@@ -63,6 +63,15 @@ class RandomAlgorithm(GenerationAlgorithm):
                 self._logger.debug(
                     "Generate test case failed with exception %s", exception
                 )
+            #The following checks if minimum coverage is reached, only if minimum-coverage-quick is below 1.0
+            if combined_chromosome.get_coverage() == coverageCache and coverageCache => minCov:
+                if coverageCounter >= minIter:
+                    break
+                else:
+                    coverageCounter = coverageCounter +1
+            else:
+                coverageCache = combined_chromosome.get_coverage()
+                coverageCounter = 1
             self.after_search_iteration(combined_chromosome)
         self.after_search_finish()
         return combined_chromosome
